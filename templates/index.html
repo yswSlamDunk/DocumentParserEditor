@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document Parser Editor</title>
+    <script src="./static/js/index.js" type="module" defer></script>
+</head>
+<body>
+    <div id="uploadArea">
+        <input type="file" id="pdfUploadButton" accept="application/pdf">
+        <input type="file" id="jsonUploadButton" accept="application/json">
+        <button id="startButton">Start</button>
+    </div>
+
+    <div id="pdfArea">
+        <iframe id="pdfIframe">
+            <canvas id="pdfCanvas"></canvas>
+        </iframe>
+    </div>
+
+    <div id="editArea">
+        <div id="elementArea">
+            <table id="elementTable">
+                <tr>
+                    <td>ID</td>
+                    <td>Category</td>
+                    <td>X1</td>
+                    <td>Y1</td>
+                    <td>X2</td>
+                    <td>Y2</td>
+                </tr>
+            </table>
+        </div>
+        <div id="textEditArea">
+            <textarea id="textEdit"></textarea>
+        </div>
+        <div id="loggingArea">
+            <textarea id="loggingText"></textarea>
+        </div>
+    </div>
+</body>
+</html>

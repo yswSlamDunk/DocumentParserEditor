@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Document Parser Editor</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="/static/js/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 컨트롤 영역 -->
+        <div class="controls">
+            <div class="file-controls">
+                <input type="file" id="jsonUploadButton" accept=".json">
+                <input type="file" id="pdfUploadButton" accept=".pdf">
+                <button id="startButton">Start</button>
+            </div>
+            
+            <div class="page-controls">
+                <button id="prevPageButton">이전</button>
+                <span id="pageNumber">0 / 0</span>
+                <button id="nextPageButton">다음</button>
+            </div>
+
+            <div class="zoom-controls">
+                <button id="zoomInButton">확대</button>
+                <button id="zoomOutButton">축소</button>
+                <button id="zoomResetButton">원본</button>
+            </div>
+        </div>
+
+        <!-- 메인 콘텐츠 영역 -->
+        <div class="content-area">
+            <!-- PDF 표시 영역 -->
+            <div id="pdfContainer">
+                <canvas id="pdfCanvas"></canvas>
+            </div>
+
+            <!-- 요소 테이블 -->
+            <div class="table-container">
+                <table id="elementsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category</th>
+                            <th>Coordinates</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 로깅 영역 -->
+        <textarea id="loggingText" readonly></textarea>
+    </div>
+</body>
+
+</html>
+

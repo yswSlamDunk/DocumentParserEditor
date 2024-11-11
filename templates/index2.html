@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>File Upload to JSON Example</title>
+</head>
+
+<body>
+    <input type="file" id="fileInput" accept=".pdf">
+    <button id="saveButton">Save File</button>
+    <button id="postButton">Post Hardcoded PDF</button>
+    <textarea id="loggingArea" rows="10" cols="50"></textarea>
+
+    <script>
+        import base64Pdf from '../js/base64Pdf'
+        document.getElementById('saveButton').addEventListener('click', function() {
+            console.log('saveButton')
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            console.log(file);
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // 파일 내용을 Base64로 인코딩
+                    const base64Data = event.target.result.split(',')[1]; // Data URL에서 Base64 부분만 추출
+
+                    // JSON 객체 생성
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        content: base64Data // Base64 인코딩된 파일 내용
+                    };
+                    console.log(base64Data)
+
+                    // JSON으로 변환
+                    const fileJson = JSON.stringify(fileData);
+                }
+
+                reader.readAsDataURL(file);
+
+            }
+        });
+        document.getElementById('postButton').addEventListener('click', function() {
+            const hardCodedPdf = {
+                name: "example.pdf",
+                type: "application/pdf",
+                size: 1024,
+                content: base64Pdf
+            }
+            const json = JSON.stringify(fileData);
+            fetch('')
+        })
+    </script>
+</body>
+
+</html>
