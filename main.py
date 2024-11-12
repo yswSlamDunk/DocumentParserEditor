@@ -17,3 +17,10 @@ async def root(request: Request):
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
+
+# import pprint
+# import json
+
+# data = json.load(open('역도_0000_0009.json', encoding='utf-8'))
+# print(data['elements'][0])
+# pprint.pprint(data)

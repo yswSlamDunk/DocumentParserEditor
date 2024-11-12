@@ -2,23 +2,32 @@
 <html lang="en">
 <head>
     <title>Document Parser Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <link rel="stylesheet" href="./static/css/index.css">
     <script src="./static/js/index.js" type="module" defer></script>
 </head>
 <body>
-    <div id="uploadArea">
-        <input type="file" id="pdfUploadButton" accept="application/pdf">
-        <input type="file" id="jsonUploadButton" accept="application/json">
-        <button id="startButton">Start</button>
+    <div id="header">   
+        <div id="uploadArea">
+            <input type="file" id="pdfUploadButton" accept="application/pdf">
+            <input type="file" id="jsonUploadButton" accept="application/json">
+            <button id="startButton">Start</button>
+        </div>
+        <div id="pageNumberArea">
+            <label id="currentPageLabel"></label>
+            <label id="totalPageLabel"></label>
+        </div>
     </div>
+    <hr style="width: 100%;">
+    
 
     <div id="pdfArea">
-        <iframe id="pdfIframe">
-            <canvas id="pdfCanvas"></canvas>
-        </iframe>
+        <canvas id="pdfCanvas"></canvas>
     </div>
 
     <div id="editArea">
         <div id="elementArea">
+            <label id="elementTableLabel">Element Table</label>
             <table id="elementTable">
                 <tr>
                     <td>ID</td>
@@ -30,11 +39,24 @@
                 </tr>
             </table>
         </div>
+        <hr style="width: 100%;">
+
         <div id="textEditArea">
+            <label id="textEditLabel">Text Edit</label>
             <textarea id="textEdit"></textarea>
         </div>
+        <hr style="width: 100%;">
+
         <div id="loggingArea">
+            <label id="loggingLabel">Logging</label>
             <textarea id="loggingText"></textarea>
+        </div>
+        <hr style="width: 100%;">
+
+        <div id="pageNumberArea">
+            <button id="prevPageButton">이전 페이지</button>
+            <button id="saveButton">저장</button>
+            <button id="nextPageButton">다음 페이지</button>
         </div>
     </div>
 </body>

@@ -1,0 +1,310 @@
+/* 전체 레이아웃 */
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
+/* 헤더 영역 스타일링 */
+#header {
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+/* 업로드 영역과 페이지 번호 영역 구분 */
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+#uploadArea {
+    flex: 2;  /* 더 많은 공간 차지 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+#header #pageNumberArea {
+    flex: 1;  /* 더 적은 공간 차지 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* 버튼 스타일 통일 */
+#startButton, #pageNumberArea button {
+    background-color: #6c757d;  /* 회색 계열 */
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#startButton:hover, #pageNumberArea button:hover {
+    background-color: #5a6268;
+}
+
+#startButton:active, #pageNumberArea button:active {
+    background-color: #545b62;
+}
+
+/* PDF 영역 수정 */
+#pdfArea {
+    float: left;
+    width: 55%;  /* 65%에서 55%로 감소 */
+    margin-right: 20px;
+    min-height: 1000px;  /* 800px에서 1000px로 증가 */
+    max-height: 1200px;  /* 920px에서 1200px로 증가 */
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#pdfCanvas {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    background-color: white;
+    border-radius: 5px;
+}
+
+/* 편집 영역 조정 */
+#editArea {
+    float: left;
+    width: 40%;
+    max-height: 1200px;
+    overflow-y: auto;
+    overflow-x: hidden;  /* 횡축 스크롤 제거 */
+    padding-right: 15px; /* 내용이 잘리지 않도록 패딩 추가 */
+}
+
+/* 라벨 스타일 */
+#elementTableLabel, #textEditLabel, #loggingLabel {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* 테이블 스타일 개선 */
+#elementTable {
+    width: 100%;
+    min-width: 400px;  /* 최소 너비 설정 */
+    border-collapse: collapse;
+    background-color: white;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    table-layout: fixed;  /* 테이블 셀 너비 고정 */
+}
+
+#elementTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    white-space: nowrap;      /* 텍스트 줄바꿈 방지 */
+    overflow: hidden;         /* 넘치는 내용 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
+}
+
+#elementTable tr:first-child {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #495057;
+}
+
+#elementTable tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* 텍스트 영역 스타일 개선 */
+#textEdit, #loggingText {
+    width: calc(100% - 24px);  /* 패딩을 고려한 너비 조정 */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+    box-sizing: border-box;  /* 패딩을 너비에 포함 */
+}
+
+#textEdit {
+    height: 100px;
+    margin-bottom: 15px;
+    resize: vertical;
+}
+
+#loggingText {
+    height: 80px;
+    background-color: #f8f9fa;
+    color: #495057;
+    resize: vertical;
+}
+
+/* 페이지 네비게이션 영역 개선 */
+#pageNumberArea {
+    text-align: center;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background: none;  /* 배경색 제거 */
+}
+
+/* 페이지 레이블 스타일 개선 */
+#currentPageLabel, #totalPageLabel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #495057;
+    padding: 6px 12px;
+    background-color: #f8f9fa;  /* 배경색 변경 */
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+    min-width: 80px;  /* 최소 너비 설정 */
+    text-align: center;
+}
+
+/* 페이지 네비게이션 버튼 스타일 통일 */
+#prevPageButton, #saveButton, #nextPageButton {
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    min-width: 120px;  /* 버튼 너비 증가 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* 그림자 효과 추가 */
+}
+
+#prevPageButton:hover, #saveButton:hover, #nextPageButton:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+#prevPageButton:active, #saveButton:active, #nextPageButton:active {
+    background-color: #545b62;
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);  /* 클릭시 그림자 감소 */
+}
+
+/* 저장 버튼 특별 스타일 */
+#saveButton {
+    background-color: #28a745;  /* 초록색 계열 */
+}
+
+#saveButton:hover {
+    background-color: #218838;
+}
+
+#saveButton:active {
+    background-color: #1e7e34;
+}
+
+/* 비활성화된 버튼 스타일 */
+#prevPageButton:disabled, #nextPageButton:disabled {
+    background-color: #dee2e6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 구분선 스타일 */
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #dee2e6;
+    margin: 15px 0;
+}
+
+/* 반응형 디자인 개선 */
+#pageNumberArea button {
+    background-color: #008CBA;
+    color: white;
+    padding: 8px 15px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#pageNumberArea button:hover {
+    background-color: #007399;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 1200px) {
+    #pdfArea, #editArea {
+        float: none;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+/* 유틸리티 클래스 */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* 파일 입력 필드 스타일 개선 */
+#uploadArea input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    flex-grow: 1;
+    cursor: pointer;
+}
+
+#uploadArea input[type="file"]:hover {
+    border-color: #adb5bd;
+}
+
+/* 시작 버튼 스타일 개선 */
+#startButton {
+    min-width: 100px;
+    background-color: #6c757d;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+#startButton:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+#startButton:active {
+    transform: translateY(0);
+}
