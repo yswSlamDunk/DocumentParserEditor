@@ -1,4 +1,5 @@
 import { addLog, checkFile } from './utils.js';
+import { State, StateHandler } from './state.js';
 
 // elements를 전역 변수로 선언
 let elements;
@@ -7,7 +8,9 @@ let pdfFileName = null;
 let checkFileResult = false;
 let pdfFile = null;
 let jsonFile = null;
-let currentPage = 1; // 이거 처음 값이 어떻게 되는지 생각 해야함.
+let currentPage = 1; 
+
+const stateHandler = new StateHandler(); // 상태 관리 객체
 
 const dict_color = {
     "table": "red",
@@ -61,14 +64,29 @@ async function loadPdf() {
     });
     
     pdfFile = await loadingTask.promise;
-    elements.totalPageLabel.textContent = `/ 총 페이지: ${pdfFile.numPages}`;
+    elements.totalPageLabel.textContent = `총 페이지: ${pdfFile.numPages}`;
     elements.currentPageLabel.textContent = `현재 페이지: ${currentPage}`;
     addLog(`PDF 로드 완료: 총 ${pdfFile.numPages} 페이지`);
 }
 
 async function loadJson() {
     const text = await jsonFile.text();
-    jsonFile = JSON.parse(text);
+    const parsedJson = JSON.parse(text);
+
+    jsonFile = parsedJson.elements.map(element => {
+        const processedElement = {
+            category: element.category,
+            coordinates: element.coordinates,
+            id: element.id,
+            page: element.page
+        };
+
+        if (element.content?.text) {
+            processedElement.text = element.content.text;
+        }
+
+        return processedElement;
+    });
 }
 
 async function renderPdf() {
@@ -90,29 +108,52 @@ async function renderPdf() {
     addLog(`${currentPage} 페이지 렌더링 완료`);
 }
 
-async function renderJson() { // 나중에 table 크기 초기화 해야함.
+async function renderJson() {
     const table = elements.elementTable;
-    while (table.rows.length > 1) {
-        table.deleteRow(1);
+    const tbody = table.querySelector('tbody');
+    
+    // tbody의 모든 행을 제거
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
     }
 
-    const pageData = jsonFile.elements?.filter(element => element.page === currentPage) || [];
+    const pageData = jsonFile.filter(element => element.page === currentPage) || [];
+    
+    // 실제 데이터 렌더링
     pageData.forEach(element => {
-        const row = table.insertRow();
+        const row = document.createElement('tr');
         const cells = [
-            element['id'],
-            element["category"] || '', //여기에 select tag 기반으로 표시 필요.
-            element["coordinates"][0]['x'] || '',  
-            element["coordinates"][0]['y'] || '',  
-            element["coordinates"][2]['x'] || '',  
-            element["coordinates"][2]['y'] || ''   
+            element.id,
+            element.category || '', //여기에 select tag 기반으로 표시 필요.
+            element.coordinates[0].x || '',  
+            element.coordinates[0].y || '',  
+            element.coordinates[2].x || '',  
+            element.coordinates[2].y || ''   
         ];
 
         cells.forEach(cellData => {
-            const cell = row.insertCell();
+            const cell = document.createElement('td');
             cell.textContent = cellData;
+            row.appendChild(cell);
         });
+        
+        tbody.appendChild(row);
     });
+
+    // 부족한 row 채우기
+    const targetRowCount = 10;
+    const remainingRows = targetRowCount - pageData.length;
+    
+    if (remainingRows > 0) {
+        for (let i = 0; i < remainingRows; i++) {
+            const emptyRow = document.createElement('tr');
+            for (let j = 0; j < 6; j++) {
+                const emptyCell = document.createElement('td');
+                emptyRow.appendChild(emptyCell);
+            }
+            tbody.appendChild(emptyRow);
+        }
+    }
 
     addLog(`JSON 데이터 렌더링 완료: ${pageData.length}개 요소`);
 }
@@ -161,7 +202,7 @@ async function renderBbox() {
         const pdfHeight = viewport.height / viewport.scale; // PDF의 원본 높이
         
         // 현재 페이지의 요소들 필터링
-        const pageData = jsonFile.elements?.filter(element => element.page === currentPage) || [];
+        const pageData = jsonFile.filter(element => element.page === currentPage) || [];
         
         pageData.forEach(element => {
             // 상대 좌표 추출 (0~1 사이의 값)
@@ -242,9 +283,13 @@ function init() {
     elements.startButton.addEventListener('click', start);
     elements.jsonUploadButton.addEventListener('change', handleJsonUploadButton);
     elements.pdfUploadButton.addEventListener('change', handlePdfUploadButton);
-    elements.saveButton.addEventListener('click', handleSaveButton);
+    elements.saveButton.addEventListener('click', handleSaveButton, true);
     elements.prevPageButton.addEventListener('click', handlePrevPageButton);
     elements.nextPageButton.addEventListener('click', handleNextPageButton);
+
+    document.addEventListener('click', (event) => {
+        addLog(`click!`);
+    });
 
     addLog('초기화 완료');
 }

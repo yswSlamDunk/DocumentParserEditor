@@ -93,10 +93,76 @@ body {
 #editArea {
     float: left;
     width: 40%;
-    max-height: 1200px;
+    height: 1200px;
+    position: relative;
+    overflow: hidden;
+    padding-right: 15px;
+}
+
+/* elementArea 스타일 */
+#elementArea {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 15px;
+    height: 45%;
     overflow-y: auto;
-    overflow-x: hidden;  /* 횡축 스크롤 제거 */
-    padding-right: 15px; /* 내용이 잘리지 않도록 패딩 추가 */
+    overflow-x: hidden;
+}
+
+/* textEditArea 스타일 */
+#textEditArea {
+    position: absolute;
+    top: 47%;
+    left: 0;
+    right: 15px;
+    height: 20%;
+}
+
+/* loggingArea 스타일 */
+#loggingArea {
+    position: absolute;
+    top: 69%;
+    left: 0;
+    right: 15px;
+    height: 20%;
+}
+
+/* 페이지 네비게이션 영역 */
+#editArea #pageNumberArea {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 15px;
+    height: 9%;
+    margin: 0;
+    padding: 10px 0;
+    background: none;
+}
+
+/* 텍스트 영역 크기 조정 */
+#textEdit, #loggingText {
+    width: 100%;
+    height: calc(100% - 30px);
+    margin: 0;
+    resize: none;
+}
+
+/* 테이블 영역 스크롤 */
+#elementTable {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+/* 구분선 제거 (위치 고정으로 인해 불필요) */
+#editArea hr {
+    display: none;
+}
+
+/* 라벨 여백 조정 */
+#elementTableLabel, #textEditLabel, #loggingLabel {
+    margin-bottom: 5px;
+    display: block;
 }
 
 /* 라벨 스타일 */
@@ -116,50 +182,35 @@ body {
     margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 5px;
-    table-layout: fixed;  /* 테이블 셀 너비 고정 */
+    table-layout: fixed;
 }
 
 #elementTable td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 12px 8px;
     text-align: center;
-    white-space: nowrap;      /* 텍스트 줄바꿈 방지 */
-    overflow: hidden;         /* 넘치는 내용 숨김 */
-    text-overflow: ellipsis; /* 넘치는 텍스트에 ... 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px;
+    line-height: 20px;
+    font-size: 14px;
 }
 
-#elementTable tr:first-child {
+#elementTable thead tr {
     background-color: #f8f9fa;
     font-weight: bold;
     color: #495057;
+    height: 30px;
+    line-height: 30px;
+}
+
+#elementTable tbody tr {
+    height: 25px;
 }
 
 #elementTable tr:hover {
     background-color: #f8f9fa;
-}
-
-/* 텍스트 영역 스타일 개선 */
-#textEdit, #loggingText {
-    width: calc(100% - 24px);  /* 패딩을 고려한 너비 조정 */
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: 'Courier New', monospace;
-    line-height: 1.5;
-    box-sizing: border-box;  /* 패딩을 너비에 포함 */
-}
-
-#textEdit {
-    height: 100px;
-    margin-bottom: 15px;
-    resize: vertical;
-}
-
-#loggingText {
-    height: 80px;
-    background-color: #f8f9fa;
-    color: #495057;
-    resize: vertical;
 }
 
 /* 페이지 네비게이션 영역 개선 */

@@ -29,14 +29,34 @@
         <div id="elementArea">
             <label id="elementTableLabel">Element Table</label>
             <table id="elementTable">
-                <tr>
-                    <td>ID</td>
-                    <td>Category</td>
-                    <td>X1</td>
-                    <td>Y1</td>
-                    <td>X2</td>
-                    <td>Y2</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Category</td>
+                        <td>X1</td>
+                        <td>Y1</td>
+                        <td>X2</td>
+                        <td>Y2</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        const rows = Array.from({length: 10});
+                        const rowsHtml = rows.map((_, i) =>
+                            `
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            `
+                        ).join('');
+                        document.querySelector('#elementTable tbody').insertAdjacentHTML('beforeend', rowsHtml);
+                    </script>
+                </tbody>
             </table>
         </div>
         <hr style="width: 100%;">
